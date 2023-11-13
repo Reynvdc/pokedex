@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import be.reynvdc.pokedex.ui.cardItemUiDataSample1
 import be.reynvdc.pokedex.ui.cardItemUiDataSample2
-import be.reynvdc.pokedex.ui.cardListUiDataSample1
 import be.reynvdc.pokedex.ui.cardListUiDataSampleList1
 import be.reynvdc.pokedex.ui.components.cardlistitem.CardListItem
 import be.reynvdc.pokedex.ui.components.SearchBar
