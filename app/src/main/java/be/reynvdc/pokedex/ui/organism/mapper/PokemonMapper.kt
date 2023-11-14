@@ -2,7 +2,7 @@ package be.reynvdc.pokedex.ui.organism.mapper
 
 import be.reynvdc.pokedex.core.service.model.Pokemon
 import be.reynvdc.pokedex.ui.components.cardlistitem.CardListUiData
-import be.reynvdc.pokedex.ui.components.tag.TagUiData
+import be.reynvdc.pokedex.ui.atom.tag.TagUiData
 import java.util.Locale
 
 class PokemonMapper {

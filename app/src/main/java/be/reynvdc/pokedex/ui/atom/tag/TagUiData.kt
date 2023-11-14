@@ -1,4 +1,4 @@
-package be.reynvdc.pokedex.ui.components.tag
+package be.reynvdc.pokedex.ui.atom.tag
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.capitalize

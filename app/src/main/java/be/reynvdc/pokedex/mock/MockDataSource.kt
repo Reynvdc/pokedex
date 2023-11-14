@@ -1,11 +1,11 @@
-package be.reynvdc.pokedex.ui
+package be.reynvdc.pokedex.mock
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.ui.components.carditem.CardItemUiData
 import be.reynvdc.pokedex.ui.components.cardlistitem.CardListUiData
-import be.reynvdc.pokedex.ui.components.tag.TagUiData
+import be.reynvdc.pokedex.ui.atom.tag.TagUiData
 
 val tagUiDataSample1 = TagUiData("water", Color.Blue)
 val tagUiDataSample2 = TagUiData("Psychic", Color.Magenta)

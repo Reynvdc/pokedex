@@ -13,7 +13,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,9 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import be.reynvdc.pokedex.R
-import be.reynvdc.pokedex.ui.cardListUiDataSample1
-import be.reynvdc.pokedex.ui.cardListUiDataSampleList1
-import be.reynvdc.pokedex.ui.components.tag.Tag
+import be.reynvdc.pokedex.mock.cardListUiDataSample1
+import be.reynvdc.pokedex.mock.cardListUiDataSampleList1
+import be.reynvdc.pokedex.ui.atom.tag.Tag
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest

@@ -1,6 +1,5 @@
-package be.reynvdc.pokedex.ui.components
+package be.reynvdc.pokedex.ui.atom
 
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -15,7 +14,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @OptIn(ExperimentalMaterial3Api::class)

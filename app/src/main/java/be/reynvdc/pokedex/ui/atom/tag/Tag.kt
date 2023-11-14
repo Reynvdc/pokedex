@@ -1,4 +1,4 @@
-package be.reynvdc.pokedex.ui.components.tag
+package be.reynvdc.pokedex.ui.atom.tag
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding

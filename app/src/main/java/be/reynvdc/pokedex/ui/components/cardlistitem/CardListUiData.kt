@@ -1,6 +1,6 @@
 package be.reynvdc.pokedex.ui.components.cardlistitem
 
-import be.reynvdc.pokedex.ui.components.tag.TagUiData
+import be.reynvdc.pokedex.ui.atom.tag.TagUiData
 
 data class CardListUiData(
     val title:String,

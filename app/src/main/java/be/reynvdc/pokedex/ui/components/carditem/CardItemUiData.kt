@@ -2,7 +2,7 @@ package be.reynvdc.pokedex.ui.components.carditem
 
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import be.reynvdc.pokedex.ui.components.tag.TagUiData
+import be.reynvdc.pokedex.ui.atom.tag.TagUiData
 
 data class CardItemUiData(
     val title:String,

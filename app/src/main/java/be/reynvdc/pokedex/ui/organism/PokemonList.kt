@@ -39,7 +39,7 @@ fun PokemonList(pokemonListUiState: PokemonListUiState, modifier: Modifier = Mod
 
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
-    Text(text = stringResource(R.string.loading), modifier = Modifier.padding(16.dp))
+    Text(text = stringResource(R.string.loading), modifier = modifier.padding(16.dp))
 }
 
 @Composable
@@ -56,6 +56,6 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun PokemonListPreview(){
-    val pokemonListViewModel: PokemonListViewModel = viewModel()
+    val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
     PokemonList(pokemonListUiState = pokemonListViewModel.pokemonListUiState)
 }
