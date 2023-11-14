@@ -18,10 +18,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -35,6 +37,7 @@ import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
 fun CardItem(cardItemUiData: CardItemUiData, modifier: Modifier = Modifier){
+    val backgroundColor = (cardItemUiData.color ?: MaterialTheme.colorScheme.primaryContainer)
     Card(modifier = modifier.fillMaxWidth()
         .height(120.dp)) {
         Box(modifier = modifier.fillMaxWidth()){
@@ -49,7 +52,8 @@ fun CardItem(cardItemUiData: CardItemUiData, modifier: Modifier = Modifier){
                     .offset(x = 24.dp)
             )
             Box(modifier = modifier.fillMaxWidth()
-                .background(cardItemUiData.color)) {
+                .background(cardItemUiData.brush ?: Brush.horizontalGradient(listOf(backgroundColor,backgroundColor)))
+            ) {
                 Column(
                     modifier = modifier
                         .padding(12.dp)
