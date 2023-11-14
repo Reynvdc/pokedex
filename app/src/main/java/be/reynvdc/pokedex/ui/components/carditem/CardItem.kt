@@ -40,13 +40,13 @@ fun CardItem(cardItemUiData: CardItemUiData, modifier: Modifier = Modifier){
     val backgroundColor = (cardItemUiData.color ?: MaterialTheme.colorScheme.primaryContainer)
     Card(modifier = modifier.fillMaxWidth()
         .height(120.dp)) {
-        Box(modifier = modifier.fillMaxWidth()){
+        Box(modifier = Modifier.fillMaxWidth()){
             val imagePainterResource = painterResource(id = cardItemUiData.imageId);
             Image(
                 painter = imagePainterResource,
                 contentDescription = null,
                 contentScale = ContentScale.FillHeight,
-                modifier = modifier
+                modifier = Modifier
                     .padding(top = 16.dp, bottom = 16.dp)
                     .align(Alignment.CenterEnd)
                     .offset(x = 24.dp)
@@ -55,7 +55,7 @@ fun CardItem(cardItemUiData: CardItemUiData, modifier: Modifier = Modifier){
                 .background(cardItemUiData.brush ?: Brush.horizontalGradient(listOf(backgroundColor,backgroundColor)))
             ) {
                 Column(
-                    modifier = modifier
+                    modifier = Modifier
                         .padding(12.dp)
                 ) {
                     Spacer(modifier = Modifier.weight(1f))

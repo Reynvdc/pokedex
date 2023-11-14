@@ -11,9 +11,9 @@ val tagUiDataSample1 = TagUiData("water", Color.Blue)
 val tagUiDataSample2 = TagUiData("Psychic", Color.Magenta)
 
 val cardListUiDataSample1 = CardListUiData(
-    "bulbasaur",
-    "Nr1",
-    R.drawable.pokemon1,
+    "yvysaur",
+    "Nr2",
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",
     {},
     tagUiDataSample1,
     tagUiDataSample2

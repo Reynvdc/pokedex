@@ -1,6 +1,5 @@
 package be.reynvdc.pokedex.ui.components.cardlistitem
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,37 +21,43 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.ui.cardListUiDataSample1
 import be.reynvdc.pokedex.ui.cardListUiDataSampleList1
 import be.reynvdc.pokedex.ui.components.tag.Tag
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardListItem(cardListUiData: CardListUiData, modifier: Modifier = Modifier){
     Card() {
-        Row(modifier = Modifier
+        Row(modifier = modifier
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
             Row(
-                modifier = modifier.height(80.dp),
+                modifier = Modifier.height(80.dp),
                 horizontalArrangement = Arrangement.Start
             ) {
-                Image(
-                    painter = painterResource(id = cardListUiData.imageId),
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(cardListUiData.imageSrc)
+                        .fallback(R.drawable.pokemon1)
+                        .crossfade(true)
+                        .build(),
                     contentDescription = cardListUiData.title,
                     contentScale = ContentScale.FillWidth,
-                    modifier = modifier
+                    modifier = Modifier
                         .fillMaxHeight()
                         .aspectRatio(1f)
-                        .clip(RectangleShape) ,
+                        .clip(RectangleShape)
                 )
                 Column(
-                    modifier
+                    Modifier
                         .fillMaxHeight(),
                     verticalArrangement = Arrangement.Center) {
                     Text(
@@ -62,15 +67,15 @@ fun CardListItem(cardListUiData: CardListUiData, modifier: Modifier = Modifier){
                     Text(text = cardListUiData.subTitle, )
                 }
             }
-            Row(horizontalArrangement = Arrangement.End, modifier = modifier.padding(16.dp)) {
+            Row(horizontalArrangement = Arrangement.End, modifier = Modifier.padding(16.dp)) {
                 Tag(
                     tagUiData = cardListUiData.tag1,
-                    modifier
+                    Modifier
                         .padding(start = 4.dp, end = 4.dp)
                 )
                 Tag(
                     tagUiData = cardListUiData.tag2,
-                    modifier.padding(start = 4.dp, end = 4.dp)
+                    Modifier.padding(start = 4.dp, end = 4.dp)
                 )
                 Icon(
                     Icons.Default.KeyboardArrowRight,

@@ -1,7 +1,5 @@
 package be.reynvdc.pokedex.ui.organism.mapper
 
-import be.reynvdc.pokedex.R
-import be.reynvdc.pokedex.core.client.appwise.model.AppwisePokemon
 import be.reynvdc.pokedex.core.service.model.Pokemon
 import be.reynvdc.pokedex.ui.components.cardlistitem.CardListUiData
 import be.reynvdc.pokedex.ui.components.tag.TagUiData
@@ -18,7 +16,7 @@ class PokemonMapper {
             return CardListUiData(
                 title = pokemon.name.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
                 subTitle = "Nr. ${pokemon.id}",
-                imageId = R.drawable.pokemon1,
+                imageSrc = pokemon.sprites.front_default,
                 onClick = {},
                 tag1 = tag1,
                 tag2 = tag2,

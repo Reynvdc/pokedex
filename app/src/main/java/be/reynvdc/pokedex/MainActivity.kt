@@ -1,6 +1,7 @@
 package be.reynvdc.pokedex
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
@@ -18,11 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import be.reynvdc.pokedex.ui.organism.PokemonList
 import be.reynvdc.pokedex.ui.cardItemUiDataSample1
 import be.reynvdc.pokedex.ui.cardItemUiDataSample2
 import be.reynvdc.pokedex.ui.components.SearchBar
 import be.reynvdc.pokedex.ui.components.carditem.CardItem
+import be.reynvdc.pokedex.ui.organism.PokemonListViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
@@ -62,7 +65,8 @@ fun PokemonApp(modifier: Modifier = Modifier){
                     CardItem(cardItemUiData = cardItemUiDataSample2)
                 }
             }
-            PokemonList()
+            val pokemonListViewModel: PokemonListViewModel = viewModel()
+            PokemonList(pokemonListViewModel.pokemonListUiState)
         }
     }
 }
