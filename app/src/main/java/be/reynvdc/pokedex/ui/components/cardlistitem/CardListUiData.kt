@@ -7,6 +7,6 @@ data class CardListUiData(
     val subTitle: String,
     val imageId: Int,
     val onClick: () -> Unit,
-    val tag1: TagUiData,
-    val tag2: TagUiData
+    val tag1: TagUiData?,
+    val tag2: TagUiData?
 )

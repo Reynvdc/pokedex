@@ -23,9 +23,6 @@ val cardListUiDataSampleList1= listOf(
     cardListUiDataSample1,
     cardListUiDataSample1,
     cardListUiDataSample1,
-    cardListUiDataSample1,
-    cardListUiDataSample1,
-    cardListUiDataSample1,
     cardListUiDataSample1
 )
 

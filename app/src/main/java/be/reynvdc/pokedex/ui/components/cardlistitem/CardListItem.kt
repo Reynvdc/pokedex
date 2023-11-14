@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import be.reynvdc.pokedex.ui.cardListUiDataSample1
+import be.reynvdc.pokedex.ui.cardListUiDataSampleList1
 import be.reynvdc.pokedex.ui.components.tag.Tag
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
@@ -83,5 +86,17 @@ fun CardListItem(cardListUiData: CardListUiData, modifier: Modifier = Modifier){
 fun PokemonCardItemPreview(){
     PokedexTheme {
         CardListItem(cardListUiDataSample1)
+    }
+}
+
+@Preview
+@Composable
+fun PokemonCardItemListPreview(){
+    PokedexTheme {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                items(cardListUiDataSampleList1) { item ->
+                    CardListItem(item)
+                }
+            }
     }
 }

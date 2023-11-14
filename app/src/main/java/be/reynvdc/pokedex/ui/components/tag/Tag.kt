@@ -14,16 +14,18 @@ import androidx.compose.ui.unit.sp
 
 
 @Composable
-fun Tag(tagUiData: TagUiData, modifier: Modifier = Modifier) {
-    Text(
-        text = tagUiData.text,
-        modifier = modifier
-            .graphicsLayer(shape = RoundedCornerShape(8.dp))
-            .background(tagUiData.color, RoundedCornerShape(12.dp))
-            .padding(start = 12.dp, top = 2.dp, bottom = 2.dp, end = 12.dp),
-        color = Color.White,
-        fontSize = 12.sp
-    )
+fun Tag(tagUiData: TagUiData?, modifier: Modifier = Modifier) {
+    if(tagUiData != null) {
+        Text(
+            text = tagUiData.text,
+            modifier = modifier
+                .graphicsLayer(shape = RoundedCornerShape(8.dp))
+                .background(tagUiData.color, RoundedCornerShape(12.dp))
+                .padding(start = 12.dp, top = 2.dp, bottom = 2.dp, end = 12.dp),
+            color = Color.White,
+            fontSize = 12.sp
+        )
+    }
 
 }
 
