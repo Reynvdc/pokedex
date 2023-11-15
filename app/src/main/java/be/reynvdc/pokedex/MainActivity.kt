@@ -19,12 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import be.reynvdc.pokedex.ui.organism.PokemonList
+import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonList
 import be.reynvdc.pokedex.mock.cardItemUiDataSample1
 import be.reynvdc.pokedex.mock.cardItemUiDataSample2
 import be.reynvdc.pokedex.ui.atom.SearchBar
 import be.reynvdc.pokedex.ui.components.carditem.CardItem
-import be.reynvdc.pokedex.ui.organism.PokemonListViewModel
+import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {

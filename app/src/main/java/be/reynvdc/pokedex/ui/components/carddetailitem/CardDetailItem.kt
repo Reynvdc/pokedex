@@ -1,38 +1,42 @@
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import be.reynvdc.pokedex.ui.atom.indicator.Indicator
-import be.reynvdc.pokedex.ui.atom.indicator.IndicatorUiModel
-import be.reynvdc.pokedex.ui.components.statindicator.StatIndicator
-import be.reynvdc.pokedex.ui.components.statindicator.StatIndicatorListPreview
+import be.reynvdc.pokedex.mock.tagUiDataSample1
+import be.reynvdc.pokedex.mock.tagUiDataSample2
+import be.reynvdc.pokedex.ui.atom.indicator.IndicatorUiData
+import be.reynvdc.pokedex.ui.atom.property.StatProperty
+import be.reynvdc.pokedex.ui.atom.property.StatPropertyUiData
+import be.reynvdc.pokedex.ui.atom.property.TextProperty
+import be.reynvdc.pokedex.ui.atom.property.TextPropertyUiData
+import be.reynvdc.pokedex.ui.atom.property.TypeProperty
+import be.reynvdc.pokedex.ui.atom.property.TypePropertyUiData
 
 @Composable
-fun CardDetailItem(modifier: Modifier = Modifier,content: @Composable ColumnScope.() -> Unit){
+fun CardDetailItem(title : String, modifier: Modifier = Modifier, content: @Composable ColumnScope.() -> Unit){
     Column(
         verticalArrangement = Arrangement.spacedBy(10.dp),
         modifier = modifier){
-        Text(text = "STATISTIEKEN", color = Color.White, fontWeight = FontWeight.Bold)
+        Text(text = title, color = Color.White, fontWeight = FontWeight.Bold)
         Card(
-            shape = RoundedCornerShape(12.dp),
-            modifier = Modifier,
-            content = content)
+            shape = RoundedCornerShape(12.dp)
+        ) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp),
+                content = content
+            )
+        }
     }
 }
 
@@ -43,8 +47,13 @@ fun CardDetailItem(modifier: Modifier = Modifier,content: @Composable ColumnScop
 @Composable
 fun CardDetailItemPreview(){
     Surface(color = Color.Green) {
-        CardDetailItem {
-            StatIndicatorListPreview()
+        CardDetailItem ("ABOUT"){
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                Text(text = "Vanaf de dag dat deze Pokemon wordt geboren, zit er een plantenzaadje op zijn rug. Het zaad wordt langzaam groter")
+                TypeProperty(TypePropertyUiData("Type", tagUiDataSample1, tagUiDataSample2))
+                StatProperty(StatPropertyUiData("HP", 55, IndicatorUiData()))
+                TextProperty(TextPropertyUiData(label = "Number", textValue = "003"))
+            }
         }
     }
 }

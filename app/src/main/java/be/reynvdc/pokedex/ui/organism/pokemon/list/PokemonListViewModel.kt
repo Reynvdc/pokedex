@@ -1,4 +1,4 @@
-package be.reynvdc.pokedex.ui.organism
+package be.reynvdc.pokedex.ui.organism.pokemon.list
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
