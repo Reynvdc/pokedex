@@ -1,21 +1,23 @@
-package be.reynvdc.pokedex.core.client.appwise
+package be.reynvdc.pokedex.core.client.pokeapi
 
-import be.reynvdc.pokedex.core.client.appwise.model.AppwisePokemon
+import be.reynvdc.pokedex.core.client.pokeapi.model.PokeApiPokemon
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 
-interface AppwisePokemonClient {
+interface PokeApiClient {
 
-    @GET("mocks/appwise-be/pokemon/57519009/pokemon")
-    suspend fun listPokemon(): List<AppwisePokemon>
+    @GET("api/v2/pokemon/{id}")
+    suspend fun getPokemonById(@Path("id") id:String): Call<PokeApiPokemon>
 
     companion object{
-        const val CLIENT_URL = "https://stoplight.io/"
+        const val CLIENT_URL = "https://pokeapi.co/"
         private var retrofit = Retrofit.Builder()
             .baseUrl(CLIENT_URL)
             .addConverterFactory(
@@ -27,8 +29,8 @@ interface AppwisePokemonClient {
             )
             .build()
 
-        fun create(): AppwisePokemonClient{
-            return retrofit.create(AppwisePokemonClient::class.java)
+        fun create(): PokeApiClient{
+            return retrofit.create(PokeApiClient::class.java)
         }
     }
 }

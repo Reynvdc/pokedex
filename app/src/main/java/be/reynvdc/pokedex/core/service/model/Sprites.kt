@@ -1,5 +1,5 @@
 package be.reynvdc.pokedex.core.service.model
 
-data class Sprite (
+data class Sprites (
     val front_default: String
 )
