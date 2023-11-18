@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.mock.cardItemUiDataSample1
 import be.reynvdc.pokedex.mock.cardItemUiDataSample2
 import be.reynvdc.pokedex.ui.atom.SearchBar
@@ -20,11 +22,11 @@ import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun PokemonOverview(modifier: Modifier = Modifier){
+fun PokemonOverview(onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modifier){
         Column (
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = Modifier.padding(16.dp)) {
-            Text(text = "Pokedex", fontSize = 32.sp, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(id = R.string.pokemon_overview_title), fontSize = 32.sp, fontWeight = FontWeight.Bold)
             SearchBar(modifier = Modifier.fillMaxWidth())
             Row(
                 modifier = modifier.fillMaxWidth(),
@@ -38,7 +40,7 @@ fun PokemonOverview(modifier: Modifier = Modifier){
                 }
             }
             val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
-            PokemonList(pokemonListViewModel.pokemonListUiState)
+            PokemonList(pokemonListViewModel.pokemonListUiState, onClickPokemon = onClickPokemon)
         }
 }
 

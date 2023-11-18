@@ -4,6 +4,9 @@
     <string name="retry">Retry</string>
     <string name="loading">Loading</string>
 
+    <!-- Pokemon Overview screen -->
+    <string name="pokemon_overview_title">Pokedex</string>
+
     <!-- Pokemon details screen -->
     <!-- Pokemon details About card -->
     <string name="pokemon_detail_about_card_title">ABOUT</string>
@@ -16,7 +19,7 @@
     <string name="pokemon_detail_ability">Ability</string>
 
     <!-- Pokemon details Stats card -->
-    <string name="pokemon_detail_stats_card_title">Statistics</string>
+    <string name="pokemon_detail_stats_card_title">STATISTICS</string>
     <string name="pokemon_detail_stats_hp">HP</string>
     <string name="pokemon_detail_stats_attack">Attack</string>
     <string name="pokemon_detail_stats_defence">Defence</string>

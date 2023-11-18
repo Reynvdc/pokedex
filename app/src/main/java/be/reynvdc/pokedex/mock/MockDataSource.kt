@@ -15,6 +15,7 @@ val tagUiDataSample3 = TagUiData("Fire", Color.Red)
 val tagUiDataSample4 = TagUiData("Flying", Color.LightGray)
 
 val cardListUiDataSample1 = CardListUiData(
+    2,
     "yvysaur",
     "Nr2",
     "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png",

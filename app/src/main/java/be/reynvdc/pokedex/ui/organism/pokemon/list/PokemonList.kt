@@ -11,14 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.ui.components.cardlistitem.CardListItem
 
 @Composable
-fun PokemonList(pokemonListUiState: PokemonListUiState, modifier: Modifier = Modifier){
+fun PokemonList(pokemonListUiState: PokemonListUiState, onClickPokemon:(Int) -> Unit = {}, modifier: Modifier = Modifier){
     when(pokemonListUiState) {
         is PokemonListUiState.Loading -> LoadingScreen(modifier = modifier.fillMaxSize())
         is PokemonListUiState.Success ->
@@ -26,7 +26,7 @@ fun PokemonList(pokemonListUiState: PokemonListUiState, modifier: Modifier = Mod
                 verticalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 items(pokemonListUiState.cardListUiDataList) {
-                    CardListItem(it)
+                    CardListItem(it, onClick = {onClickPokemon(it.id)})
                 }
             }
 

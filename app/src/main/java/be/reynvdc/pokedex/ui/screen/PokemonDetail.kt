@@ -36,11 +36,11 @@ fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState){
     when(pokemonDetailUiState){
         is PokemonDetailUiState.Loading -> LoadingScreen()
         is PokemonDetailUiState.Success ->
-            Surface (color = Color.Green){
+            Surface (color = pokemonDetailUiState.backgroundColor){
                 Column(modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(start = 16.dp, end = 16.dp)) {
-                    Text(text = pokemonDetailUiState.name, fontSize = MaterialTheme.typography.titleLarge.fontSize)
+                    Text(text = pokemonDetailUiState.name, fontSize = MaterialTheme.typography.titleLarge.fontSize, color = Color.White)
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
                             .data(pokemonDetailUiState.imageSrc)

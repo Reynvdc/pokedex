@@ -16,6 +16,7 @@ class PokemonMapper {
             if(sizeType > 0) tag1 = TypeMapper.toTagUiData(pokemon.types[0])
             if(sizeType > 1) tag2 = TypeMapper.toTagUiData(pokemon.types[1])
             return CardListUiData(
+                id = pokemon.id,
                 title = pokemon.name.capitalizeFirstLetter(),
                 subTitle = "Nr. ${pokemon.id}",
                 imageSrc = pokemon.sprites.front_default,

@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,9 +33,10 @@ import be.reynvdc.pokedex.ui.theme.PokedexTheme
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CardListItem(cardListUiData: CardListUiData, modifier: Modifier = Modifier){
-    Card() {
+fun CardListItem(cardListUiData: CardListUiData, onClick:()-> Unit ={},modifier: Modifier = Modifier){
+    Card(onClick = onClick) {
         Row(modifier = modifier
             .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween) {
