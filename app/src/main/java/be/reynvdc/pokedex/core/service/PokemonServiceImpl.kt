@@ -13,13 +13,13 @@ class PokemonServiceImpl : PokemonService{
     private val pokeApiPokemonClient = PokeApiClient.create()
 
     override suspend fun getList() : List<Pokemon>{
-        var appwisePokemonList = appwisePokemonClient.listPokemon()
+        val appwisePokemonList = appwisePokemonClient.listPokemon()
         return PokemonMapper.toPokemonList(appwisePokemonList)
     }
 
     override suspend fun getPokemonById(id: Int): Pokemon {
-        var pokeApiPokemon: PokeApiPokemon =
-            pokeApiPokemonClient.getPokemonById(id.toString()).execute().body()
+        val pokeApiPokemon: PokeApiPokemon =
+            pokeApiPokemonClient.getPokemonById(id.toString())
                 ?: throw PokemonNotFoundException("Pokemon not found with id=$id")
         return PokemonMapper.toPokemon(pokeApiPokemon)
     }

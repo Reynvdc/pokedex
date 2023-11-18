@@ -1,13 +1,13 @@
 package be.reynvdc.pokedex.core.service.mapper
 
 import be.reynvdc.pokedex.core.client.appwise.model.AppwisePokemon
-import be.reynvdc.pokedex.core.client.pokeapi.model.AbilityWrapper
-import be.reynvdc.pokedex.core.client.pokeapi.model.MoveWrapper
 import be.reynvdc.pokedex.core.client.pokeapi.model.PokeApiPokemon
+import be.reynvdc.pokedex.core.client.pokeapi.model.StatName
 import be.reynvdc.pokedex.core.service.model.Ability
 import be.reynvdc.pokedex.core.service.model.Move
 import be.reynvdc.pokedex.core.service.model.Pokemon
 import be.reynvdc.pokedex.core.service.model.Sprites
+import be.reynvdc.pokedex.core.service.model.Stats
 import be.reynvdc.pokedex.core.service.model.Type
 
 class PokemonMapper {
@@ -32,17 +32,30 @@ class PokemonMapper {
                 sprites = toSprites(pokeApiPokemon.sprites),
                 types = toTypeList(pokeApiPokemon.types),
                 height = pokeApiPokemon.height,
-                weight = pokeApiPokemon.weight,
+                weight = pokeApiPokemon.weight / 10, // hectogramToKg
                 abilities = toAbilites(pokeApiPokemon.abilities),
-                moves = toMoves(pokeApiPokemon.moves)
+                moves = toMoves(pokeApiPokemon.moves),
+                stats = toStats(pokeApiPokemon.stats)
             )
         }
 
-        private fun toAbilites(abilities: List<AbilityWrapper>): List<Ability> {
+        private fun toStats(stats: List<be.reynvdc.pokedex.core.client.pokeapi.model.Stat>): Stats {
+            val mappedStats = stats.associate { Pair(it.stat.name,it.baseStat) }
+            return Stats(
+                hp = mappedStats[StatName.HP.label] ?: 0,
+                attack = mappedStats[StatName.ATTACK.label] ?: 0,
+                defence = mappedStats[StatName.DEFENCE.label] ?: 0,
+                specialAttack = mappedStats[StatName.SPECIAL_ATTACK.label] ?: 0,
+                specialDefence = mappedStats[StatName.SPECIAL_DEFENCE.label] ?: 0,
+                speed = mappedStats[StatName.SPEED.label] ?: 0,
+            )
+        }
+
+        private fun toAbilites(abilities: List<be.reynvdc.pokedex.core.client.pokeapi.model.Ability>): List<Ability> {
             return abilities.map { toAbility(it) }
         }
 
-        private fun toAbility(abilityWrapper: AbilityWrapper) : Ability{
+        private fun toAbility(abilityWrapper: be.reynvdc.pokedex.core.client.pokeapi.model.Ability) : Ability{
             return Ability(
                 name = abilityWrapper.ability.name
             )
@@ -63,14 +76,14 @@ class PokemonMapper {
             return Sprites(sprites.front_default)
         }
 
-        private fun toMoves(moves: List<MoveWrapper>) : List<Move>{
+        private fun toMoves(moves: List<be.reynvdc.pokedex.core.client.pokeapi.model.Move>) : List<Move>{
             return moves.map { toMove(it) }
         }
 
-        private fun toMove(moveWrapper: MoveWrapper): Move{
+        private fun toMove(move: be.reynvdc.pokedex.core.client.pokeapi.model.Move): Move{
             return Move(
-                name = moveWrapper.move.name,
-                levelLearntAt = moveWrapper.versionGroupDetails.first().levelLearnedAt
+                name = move.move.name,
+                levelLearntAt = move.versionGroupDetails.first().levelLearnedAt
             )
         }
     }

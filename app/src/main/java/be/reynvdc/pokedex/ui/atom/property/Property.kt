@@ -80,6 +80,6 @@ fun PropertyPreview(){
     CardDetailItem("TITLE") {
         TypeProperty(TypePropertyUiData("TYPE", tagUiDataSample1, tagUiDataSample2))
         TextProperty(TextPropertyUiData("Number", "003"))
-        StatProperty(StatPropertyUiData("HP", 55, IndicatorUiData()))
+        StatProperty(BaseStatPropertyUiData("HP", 55, IndicatorUiData()))
     }
 }

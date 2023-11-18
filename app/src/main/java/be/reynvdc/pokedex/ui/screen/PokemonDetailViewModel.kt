@@ -11,8 +11,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import be.reynvdc.pokedex.PokedexApplication
 import be.reynvdc.pokedex.core.service.PokemonService
 import be.reynvdc.pokedex.core.service.exception.PokemonNotFoundException
-import be.reynvdc.pokedex.mock.pokemonAboutCardUiData
-import be.reynvdc.pokedex.mock.pokemonStatsCardUiData
+import be.reynvdc.pokedex.ui.organism.mapper.PokemonMapper
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonAboutCardUiData
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonStatsCardUiData
 import kotlinx.coroutines.launch
@@ -34,15 +33,15 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
         private set
 
     init {
-        getPokemon(1)
+        getPokemon(9)
     }
 
     fun getPokemon(id:Int) {
         viewModelScope.launch {
             try {
                 val pokemon = pokemonService.getPokemonById(id)
-                val pokemonAboutCardUiData = pokemonAboutCardUiData
-                val pokemonStatsCardUiData = pokemonStatsCardUiData
+                val pokemonAboutCardUiData = PokemonMapper.toPokemonAboutCardUiData(pokemon)
+                val pokemonStatsCardUiData = PokemonMapper.toPokemonStatsCardUiData(pokemon)
                 pokemonDetailUiState = PokemonDetailUiState.Success(
                     name = pokemon.name,
                     imageSrc = pokemon.sprites.front_default,

@@ -16,7 +16,7 @@ import be.reynvdc.pokedex.mock.tagUiDataSample1
 import be.reynvdc.pokedex.mock.tagUiDataSample2
 import be.reynvdc.pokedex.ui.atom.indicator.IndicatorUiData
 import be.reynvdc.pokedex.ui.atom.property.StatProperty
-import be.reynvdc.pokedex.ui.atom.property.StatPropertyUiData
+import be.reynvdc.pokedex.ui.atom.property.BaseStatPropertyUiData
 import be.reynvdc.pokedex.ui.atom.property.TextProperty
 import be.reynvdc.pokedex.ui.atom.property.TextPropertyUiData
 import be.reynvdc.pokedex.ui.atom.property.TypeProperty
@@ -51,7 +51,7 @@ fun CardDetailItemPreview(){
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Text(text = "Vanaf de dag dat deze Pokemon wordt geboren, zit er een plantenzaadje op zijn rug. Het zaad wordt langzaam groter")
                 TypeProperty(TypePropertyUiData("Type", tagUiDataSample1, tagUiDataSample2))
-                StatProperty(StatPropertyUiData("HP", 55, IndicatorUiData()))
+                StatProperty(BaseStatPropertyUiData("HP", 55, IndicatorUiData()))
                 TextProperty(TextPropertyUiData(label = "Number", textValue = "003"))
             }
         }

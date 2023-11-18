@@ -25,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     val pokemonDetailViewModel: PokemonDetailViewModel = viewModel(factory = PokemonDetailViewModel.Factory)
                     PokemonDetailScreen(pokemonDetailViewModel.pokemonDetailUiState)
 
-//                    PokemonOverview()
+//                   PokemonOverview()
                 }
             }
         }

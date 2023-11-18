@@ -3,4 +3,25 @@
     <string name="loading_failed">Failed to load</string>
     <string name="retry">Retry</string>
     <string name="loading">Loading</string>
+
+    <!-- Pokemon details screen -->
+    <!-- Pokemon details About card -->
+    <string name="pokemon_detail_about_card_title">ABOUT</string>
+    <string name="pokemon_detail_type">Type</string>
+    <string name="pokemon_detail_number">Number</string>
+    <string name="pokemon_detail_height">Height</string>
+    <string name="pokemon_detail_weight">Weight</string>
+    <string name="pokemon_detail_category">Category</string>
+    <string name="pokemon_detail_sex">Sex</string>
+    <string name="pokemon_detail_ability">Ability</string>
+
+    <!-- Pokemon details Stats card -->
+    <string name="pokemon_detail_stats_card_title">Statistics</string>
+    <string name="pokemon_detail_stats_hp">HP</string>
+    <string name="pokemon_detail_stats_attack">Attack</string>
+    <string name="pokemon_detail_stats_defence">Defence</string>
+    <string name="pokemon_detail_stats_special_attack">Sp. Atk</string>
+    <string name="pokemon_detail_stats_special_defence">Sp. Def</string>
+    <string name="pokemon_detail_stats_speed">Speed</string>
+    <string name="pokemon_detail_stats_total">Total</string>
 </resources>
