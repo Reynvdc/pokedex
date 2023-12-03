@@ -18,13 +18,13 @@ import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBar(modifier : Modifier = Modifier) {
+fun SearchBar(inputValue: String = "", onSearchAction: (String) -> Unit = {}, modifier : Modifier = Modifier) {
     TextField(
         leadingIcon = {
             Icon(
                 Icons.Default.Search,
                 contentDescription = "Search")},
-        value = "",
+        value = inputValue,
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color.Gray,
             disabledTextColor = Color.Transparent,
@@ -32,7 +32,7 @@ fun SearchBar(modifier : Modifier = Modifier) {
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent
         ),
-        onValueChange = {},
+        onValueChange = onSearchAction,
         modifier = modifier
             .graphicsLayer(shape = RoundedCornerShape(16.dp)),
         shape = RoundedCornerShape(16.dp),

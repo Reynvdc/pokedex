@@ -12,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import be.reynvdc.pokedex.PokedexApplication
 import be.reynvdc.pokedex.core.service.PokemonService
 import be.reynvdc.pokedex.core.service.exception.PokemonNotFoundException
+import be.reynvdc.pokedex.core.service.model.Pokemon
 import be.reynvdc.pokedex.core.service.util.capitalizeFirstLetter
 import be.reynvdc.pokedex.ui.organism.mapper.PokemonMapper
 import be.reynvdc.pokedex.ui.organism.mapper.TypeMapper
@@ -35,13 +36,16 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
 
     var pokemonDetailUiState: PokemonDetailUiState by mutableStateOf(PokemonDetailUiState.Loading)
         private set
-
-    init {
-        getPokemon(6)
-    }
+    var currentPokemon: Pokemon? by mutableStateOf(null)
 
     fun updatePokemon(id:Int){
+        pokemonDetailUiState = PokemonDetailUiState.Loading
         getPokemon(id)
+    }
+
+    fun resetPokemon(){
+        pokemonDetailUiState = PokemonDetailUiState.Loading
+        currentPokemon = null;
     }
 
     private fun getPokemon(id:Int) {
@@ -50,6 +54,7 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
                 val pokemon = pokemonService.getPokemonById(id)
                 val pokemonAboutCardUiData = PokemonMapper.toPokemonAboutCardUiData(pokemon)
                 val pokemonStatsCardUiData = PokemonMapper.toPokemonStatsCardUiData(pokemon)
+                currentPokemon = pokemon
                 pokemonDetailUiState = PokemonDetailUiState.Success(
                     backgroundColor = TypeMapper.toColor(pokemon.types.first().type),
                     name = pokemon.name.capitalizeFirstLetter(),
@@ -59,6 +64,7 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
                 )
             }
             catch (e: PokemonNotFoundException){
+                currentPokemon = null
                 pokemonDetailUiState = PokemonDetailUiState.Error
             }
         }

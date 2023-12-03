@@ -2,6 +2,7 @@ package be.reynvdc.pokedex.ui.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.mock.pokemonAboutCardUiData
 import be.reynvdc.pokedex.mock.pokemonStatsCardUiData
+import be.reynvdc.pokedex.ui.organism.AppBar
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonAboutCard
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonStatPreview
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonStatsCard
@@ -32,15 +34,16 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState){
+fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState, navigateUp: ()-> Unit){
     when(pokemonDetailUiState){
         is PokemonDetailUiState.Loading -> LoadingScreen()
         is PokemonDetailUiState.Success ->
             Surface (color = pokemonDetailUiState.backgroundColor){
-                Column(modifier = Modifier
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier
                     .verticalScroll(rememberScrollState())
                     .padding(start = 16.dp, end = 16.dp)) {
-                    Text(text = pokemonDetailUiState.name, fontSize = MaterialTheme.typography.titleLarge.fontSize, color = Color.White)
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
                             .data(pokemonDetailUiState.imageSrc)
@@ -52,6 +55,13 @@ fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState){
                     PokemonAboutCard(pokemonAboutCardUiData = pokemonDetailUiState.pokemonAboutCardUiData)
                     PokemonStatsCard(pokemonStatsCardUiData = pokemonDetailUiState.pokemonStatsCardUiData)
                 }
+                AppBar(
+                    title = pokemonDetailUiState.name,
+                    canNavigateBack = true,
+                    color = pokemonDetailUiState.backgroundColor.copy(alpha = 0.4f),
+                    navigateUp = navigateUp,
+                    actionIcons = {}
+                )
             }
         is PokemonDetailUiState.Error -> ErrorScreen()
     }
@@ -61,6 +71,13 @@ fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState){
 @Preview
 @Composable
 fun PokemonDetailScreenPreview(){
-    val pokemonDetailViewModel: PokemonDetailViewModel = viewModel(factory = PokemonDetailViewModel.Factory)
-    PokemonDetailScreen(pokemonDetailViewModel.pokemonDetailUiState)
+    PokemonDetailScreen(
+        PokemonDetailUiState.Success(
+            name = "bulba",
+            imageSrc = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png",
+            pokemonStatsCardUiData = pokemonStatsCardUiData,
+            pokemonAboutCardUiData = pokemonAboutCardUiData
+        ),
+        navigateUp = {}
+    )
 }

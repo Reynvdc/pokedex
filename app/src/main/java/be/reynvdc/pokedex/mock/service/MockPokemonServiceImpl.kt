@@ -37,4 +37,10 @@ class MockPokemonServiceImpl : PokemonService {
             types = listOf(Type(1,Type.TypeName("water")))
         );
     }
+
+    override suspend fun getPokemonByString(value: String): Pokemon {
+        return getPokemonById(0)
+    }
+
+
 }

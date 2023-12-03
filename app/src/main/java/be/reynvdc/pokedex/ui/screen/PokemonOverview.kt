@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,25 +27,34 @@ import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
 fun PokemonOverview(onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modifier){
-        Column (
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.padding(16.dp)) {
-            Text(text = stringResource(id = R.string.pokemon_overview_title), fontSize = 32.sp, fontWeight = FontWeight.Bold)
-            SearchBar(modifier = Modifier.fillMaxWidth())
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Column(modifier = modifier.weight(1f)) {
-                    CardItem(cardItemUiDataSample1)
-                }
-                Column(modifier = modifier.weight(1f)) {
-                    CardItem(cardItemUiData = cardItemUiDataSample2)
-                }
+    val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
+    var searchedWord by remember {
+        mutableStateOf("")
+    }
+    Column (
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+        modifier = Modifier.padding(16.dp)) {
+        Text(text = stringResource(id = R.string.pokemon_overview_title), fontSize = 32.sp, fontWeight = FontWeight.Bold)
+        SearchBar(
+            inputValue = searchedWord,
+            onSearchAction = {
+                searchedWord = it
+                pokemonListViewModel.updateList(it) },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Row(
+            modifier = modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            Column(modifier = modifier.weight(1f)) {
+                CardItem(cardItemUiDataSample1)
             }
-            val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
-            PokemonList(pokemonListViewModel.pokemonListUiState, onClickPokemon = onClickPokemon)
+            Column(modifier = modifier.weight(1f)) {
+                CardItem(cardItemUiData = cardItemUiDataSample2)
+            }
         }
+        PokemonList(pokemonListViewModel.pokemonListUiState, onClickPokemon = onClickPokemon)
+    }
 }
 
 @Composable

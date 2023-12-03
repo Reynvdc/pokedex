@@ -8,8 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import be.reynvdc.pokedex.core.service.PokemonService
 import be.reynvdc.pokedex.PokedexApplication
+import be.reynvdc.pokedex.core.service.PokemonService
+import be.reynvdc.pokedex.core.service.exception.PokemonNotFoundException
 import be.reynvdc.pokedex.ui.components.cardlistitem.CardListUiData
 import be.reynvdc.pokedex.ui.organism.mapper.PokemonMapper
 import kotlinx.coroutines.launch
@@ -33,6 +34,25 @@ class PokemonListViewModel(private val pokemonService: PokemonService) : ViewMod
             val pokemonList = pokemonService.getList()
             val cardListUiDataList = PokemonMapper.toCardListItemUiDataList(pokemonList)
             pokemonListUiState = PokemonListUiState.Success(cardListUiDataList)
+        }
+    }
+
+    fun updateList(searchString: String) {
+        if (searchString.isEmpty()) {
+            getPokemon()
+        } else {
+            viewModelScope.launch {
+                try {
+                    pokemonListUiState = PokemonListUiState.Loading
+                    val pokemon = pokemonService.getPokemonByString(searchString)
+                    pokemonListUiState = PokemonListUiState.Success(
+                        PokemonMapper.toCardListItemUiDataList(listOf(pokemon))
+                    )
+                } catch (e: PokemonNotFoundException) {
+                    pokemonListUiState = PokemonListUiState.Error
+                }
+
+            }
         }
     }
 

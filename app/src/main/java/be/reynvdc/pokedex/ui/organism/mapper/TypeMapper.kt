@@ -16,9 +16,9 @@ class TypeMapper {
         }
         fun toColor(type: Type.TypeName): Color {
             return when (type.name) {
-                "grass" -> Color.Green
-                "poison" -> Color.Magenta
-                "fire" -> Color.Red
+                "grass" -> Color(0xFF8BC34A)
+                "poison" -> Color(0xFF9C27B0)
+                "fire" -> Color(0xFFFF9800)
                 "flying" -> Color.Gray
                 "normal" -> Color.LightGray
                 "bug" -> Color.Green

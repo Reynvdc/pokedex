@@ -6,4 +6,5 @@ interface PokemonService {
     suspend fun getList() : List<Pokemon>
 
     suspend fun getPokemonById(id: Int) : Pokemon
+    suspend fun getPokemonByString(value: String) : Pokemon
 }

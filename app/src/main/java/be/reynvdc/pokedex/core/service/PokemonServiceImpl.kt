@@ -6,6 +6,7 @@ import be.reynvdc.pokedex.core.client.pokeapi.model.PokeApiPokemon
 import be.reynvdc.pokedex.core.service.exception.PokemonNotFoundException
 import be.reynvdc.pokedex.core.service.mapper.PokemonMapper
 import be.reynvdc.pokedex.core.service.model.Pokemon
+import retrofit2.awaitResponse
 
 class PokemonServiceImpl : PokemonService{
 
@@ -18,9 +19,17 @@ class PokemonServiceImpl : PokemonService{
     }
 
     override suspend fun getPokemonById(id: Int): Pokemon {
-        val pokeApiPokemon: PokeApiPokemon =
-            pokeApiPokemonClient.getPokemonById(id.toString())
-                ?: throw PokemonNotFoundException("Pokemon not found with id=$id")
-        return PokemonMapper.toPokemon(pokeApiPokemon)
+        return getPokemonByString(id.toString())
+    }
+
+    override suspend fun getPokemonByString(value: String): Pokemon {
+        val callGetPokemon = pokeApiPokemonClient.getPokemonByIdOrString(value.lowercase())
+        val response = callGetPokemon.awaitResponse()
+        if(response.isSuccessful) {
+            val pokeApiPokemon: PokeApiPokemon = response.body()
+            ?: throw PokemonNotFoundException("Pokemon not found with name or id=$value")
+            return PokemonMapper.toPokemon(pokeApiPokemon)
+        }
+        else throw PokemonNotFoundException("Pokemon not found with name or id=$value")
     }
 }
