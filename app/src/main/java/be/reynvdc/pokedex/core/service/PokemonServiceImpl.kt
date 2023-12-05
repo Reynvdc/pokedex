@@ -31,7 +31,15 @@ class PokemonServiceImpl : PokemonService{
     }
 
     override suspend fun getPokemonById(id: Int): be.reynvdc.pokedex.core.service.model.Pokemon {
-        return getPokemonByString(id.toString())
+        val pokemonDatabase = PokemonDatabase.INSTANCE?.pokemonDao()?.findById(id)
+        return if (pokemonDatabase != null && pokemonDatabase.hasDetails()) PokemonServiceMapper.toPokemon(pokemonDatabase)
+        else {
+            val pokemon = getPokemonByString(id.toString())
+            PokemonDatabase.INSTANCE?.pokemonDao()?.insert(
+                PokemonDatabaseMapper.toPokemon(pokemon)
+            )
+            pokemon
+        }
     }
 
     override suspend fun getPokemonByString(value: String): Pokemon {

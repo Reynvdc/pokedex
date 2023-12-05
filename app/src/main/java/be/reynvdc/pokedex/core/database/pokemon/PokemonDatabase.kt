@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import be.reynvdc.pokedex.core.database.pokemon.entities.Pokemon
 
-@Database(entities = [Pokemon::class], version = 3)
+@Database(entities = [Pokemon::class], version = 5)
 abstract class PokemonDatabase : RoomDatabase() {
     abstract fun pokemonDao() : PokemonDao
 

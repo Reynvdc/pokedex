@@ -46,7 +46,6 @@ class PokemonMapper {
                 category = "TODO",
                 sex ="TODO",
                 ability = pokemon.abilities.first().name.capitalizeFirstLetter(),
-
             )
         }
 
