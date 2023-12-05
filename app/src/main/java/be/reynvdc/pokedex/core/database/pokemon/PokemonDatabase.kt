@@ -4,11 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import be.reynvdc.pokedex.core.database.pokemon.entities.FavoritePokemon
 import be.reynvdc.pokedex.core.database.pokemon.entities.Pokemon
 
-@Database(entities = [Pokemon::class], version = 5)
+@Database(entities = [Pokemon::class, FavoritePokemon::class], version = 6)
 abstract class PokemonDatabase : RoomDatabase() {
     abstract fun pokemonDao() : PokemonDao
+    abstract fun favoritePokemonDao(): FavoritePokemonDao
 
     companion object {
 

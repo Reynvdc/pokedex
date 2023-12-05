@@ -10,6 +10,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,16 +20,18 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.mock.cardItemUiDataSample1
-import be.reynvdc.pokedex.mock.cardItemUiDataSample2
 import be.reynvdc.pokedex.ui.atom.SearchBar
 import be.reynvdc.pokedex.ui.components.carditem.CardItem
+import be.reynvdc.pokedex.ui.components.carditem.CardItemUiData
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonList
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListViewModel
+import be.reynvdc.pokedex.ui.screen.PokemonOverviewViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
 fun PokemonOverview(onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modifier){
     val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
+    val pokemonOverviewViewModel: PokemonOverviewViewModel = viewModel(factory = PokemonOverviewViewModel.Factory)
     var searchedWord by remember {
         mutableStateOf("")
     }
@@ -50,7 +54,15 @@ fun PokemonOverview(onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modi
                 CardItem(cardItemUiDataSample1)
             }
             Column(modifier = modifier.weight(1f)) {
-                CardItem(cardItemUiData = cardItemUiDataSample2)
+                CardItem(cardItemUiData = CardItemUiData(
+                    "Favorieten",
+                    "${pokemonOverviewViewModel.favoritePokemonSize} pokemons",
+                    R.drawable.pokeball_white,
+                    {},
+                    //gradient colors: #5ACCA1 to #27CFCE
+                    brush = Brush.horizontalGradient(listOf(Color(0x5ACCA1).copy(alpha = 0.8f), Color(0x27CFCE).copy(alpha = 0.6f)))
+                )
+                )
             }
         }
         PokemonList(pokemonListViewModel.pokemonListUiState, onClickPokemon = onClickPokemon)
