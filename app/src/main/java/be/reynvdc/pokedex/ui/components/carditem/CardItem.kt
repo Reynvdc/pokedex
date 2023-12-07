@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,10 +29,13 @@ import be.reynvdc.pokedex.mock.cardItemUiDataSample1
 import be.reynvdc.pokedex.mock.cardItemUiDataSample2
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CardItem(cardItemUiData: CardItemUiData, modifier: Modifier = Modifier){
     val backgroundColor = (cardItemUiData.color ?: MaterialTheme.colorScheme.primaryContainer)
-    Card(modifier = modifier.fillMaxWidth()
+    Card(
+        onClick = cardItemUiData.onClick,
+        modifier = modifier.fillMaxWidth()
         .height(120.dp)) {
         Box(modifier = Modifier.fillMaxWidth()){
             val imagePainterResource = painterResource(id = cardItemUiData.imageId);

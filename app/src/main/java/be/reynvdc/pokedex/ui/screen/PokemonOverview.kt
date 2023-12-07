@@ -28,7 +28,7 @@ import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun PokemonOverview(favoritePokemonTotal: Int = 0, onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modifier){
+fun PokemonOverview(favoritePokemonTotal: Int = 0, onClickPokemon: (Int) -> Unit = {}, onClickFavorite: () -> Unit= {},modifier: Modifier = Modifier){
     val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
     var searchedWord by remember {
         mutableStateOf("")
@@ -56,7 +56,7 @@ fun PokemonOverview(favoritePokemonTotal: Int = 0, onClickPokemon: (Int) -> Unit
                     "Favorieten",
                     "${favoritePokemonTotal} pokemons",
                     R.drawable.pokeball_white,
-                    {},
+                    onClick = onClickFavorite,
                     //gradient colors: #5ACCA1 to #27CFCE
                     brush = Brush.horizontalGradient(listOf(Color(0x5ACCA1).copy(alpha = 0.8f), Color(0x27CFCE).copy(alpha = 0.6f)))
                 )

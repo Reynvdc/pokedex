@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import be.reynvdc.pokedex.ui.screen.FavoritePokemon
 import be.reynvdc.pokedex.ui.screen.PokemonDetailScreen
 import be.reynvdc.pokedex.ui.screen.PokemonDetailViewModel
 import be.reynvdc.pokedex.ui.screen.PokemonOverviewViewModel
@@ -67,10 +68,14 @@ fun PokedexApp(
                     PokemonOverview(
                         pokemonOverviewViewModel.favoritePokemonSize,
                         onClickPokemon = {index ->
-                        currentPokemonIndex = index
-                        pokemonDetailViewModel.updatePokemon(currentPokemonIndex)
-                        navController.navigate(PokedexScreen.DETAIL.name)
-                    })
+                            currentPokemonIndex = index
+                            pokemonDetailViewModel.updatePokemon(currentPokemonIndex)
+                            navController.navigate(PokedexScreen.DETAIL.name)
+                        },
+                        onClickFavorite = {
+                            navController.navigate(PokedexScreen.FAVORITE.name)
+                        }
+                    )
                 }
                 composable(route = PokedexScreen.DETAIL.name){
                     PokemonDetailScreen(
@@ -85,6 +90,9 @@ fun PokedexApp(
                         addFavorite = {pokemonDetailViewModel.addCurrentPokemonToFavorite()}
                     )
                 }
+                composable(route = PokedexScreen.FAVORITE.name){
+                    FavoritePokemon()
+                }
             }
         }
     }
@@ -92,6 +100,7 @@ fun PokedexApp(
 
 enum class PokedexScreen{
     OVERVIEW,
-    DETAIL
+    DETAIL,
+    FAVORITE
 }
 
