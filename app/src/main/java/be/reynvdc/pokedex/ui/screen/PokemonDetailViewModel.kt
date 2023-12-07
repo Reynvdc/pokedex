@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import be.reynvdc.pokedex.PokedexApplication
+import be.reynvdc.pokedex.core.service.FavoritePokemonService
 import be.reynvdc.pokedex.core.service.PokemonService
 import be.reynvdc.pokedex.core.service.exception.PokemonNotFoundException
 import be.reynvdc.pokedex.core.service.model.Pokemon
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 sealed interface PokemonDetailUiState {
     data class Success(
         val backgroundColor: Color = Color.Transparent,
+        val isFavorite : Boolean = false,
         val name: String,
         val imageSrc: String,
         val pokemonAboutCardUiData: PokemonAboutCardUiData,
@@ -32,11 +34,15 @@ sealed interface PokemonDetailUiState {
     object Loading : PokemonDetailUiState
 }
 
-class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewModel(){
+class PokemonDetailViewModel(
+    private val pokemonService: PokemonService,
+    private val favoritePokemonService: FavoritePokemonService
+) : ViewModel(){
 
     var pokemonDetailUiState: PokemonDetailUiState by mutableStateOf(PokemonDetailUiState.Loading)
         private set
     var currentPokemon: Pokemon? by mutableStateOf(null)
+    var isFavorite: Boolean by mutableStateOf(false)
 
     fun updatePokemon(id:Int){
         pokemonDetailUiState = PokemonDetailUiState.Loading
@@ -48,6 +54,26 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
         currentPokemon = null;
     }
 
+    fun addCurrentPokemonToFavorite(){
+        val temporaryCurrentPokemon = currentPokemon
+        viewModelScope.launch {
+            if(temporaryCurrentPokemon != null) {
+                favoritePokemonService.add(temporaryCurrentPokemon)
+                pokemonDetailUiState
+                isFavorite = true
+            }
+        }
+    }
+    fun deleteCurrentPokemonFromFavorite(){
+        val temporaryCurrentPokemon = currentPokemon
+        viewModelScope.launch {
+            if(temporaryCurrentPokemon != null) {
+                favoritePokemonService.delete(temporaryCurrentPokemon)
+                isFavorite = false
+            }
+        }
+    }
+
     private fun getPokemon(id:Int) {
         viewModelScope.launch {
             try {
@@ -55,8 +81,10 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
                 val pokemonAboutCardUiData = PokemonMapper.toPokemonAboutCardUiData(pokemon)
                 val pokemonStatsCardUiData = PokemonMapper.toPokemonStatsCardUiData(pokemon)
                 currentPokemon = pokemon
+                isFavorite = favoritePokemonService.isFavorite(pokemon)
                 pokemonDetailUiState = PokemonDetailUiState.Success(
                     backgroundColor = TypeMapper.toColor(pokemon.types.first().type),
+                    isFavorite = isFavorite,
                     name = pokemon.name.capitalizeFirstLetter(),
                     imageSrc = pokemon.sprites.front_default,
                     pokemonAboutCardUiData = pokemonAboutCardUiData,
@@ -75,7 +103,8 @@ class PokemonDetailViewModel(private val pokemonService: PokemonService) : ViewM
                 val application =
                     (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as PokedexApplication)
                 val pokemonService = application.container.pokemonService
-                PokemonDetailViewModel(pokemonService = pokemonService)
+                val favoritePokemonService = application.container.favoritePokemonService
+                PokemonDetailViewModel(pokemonService = pokemonService, favoritePokemonService = favoritePokemonService)
             }
         }
     }

@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import be.reynvdc.pokedex.ui.screen.PokemonDetailScreen
 import be.reynvdc.pokedex.ui.screen.PokemonDetailViewModel
+import be.reynvdc.pokedex.ui.screen.PokemonOverviewViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 class MainActivity : ComponentActivity() {
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun PokedexApp(
     navController: NavHostController = rememberNavController(),
-    pokemonDetailViewModel: PokemonDetailViewModel = viewModel(factory = PokemonDetailViewModel.Factory)
+    pokemonDetailViewModel: PokemonDetailViewModel = viewModel(factory = PokemonDetailViewModel.Factory),
+    pokemonOverviewViewModel: PokemonOverviewViewModel = viewModel(factory = PokemonOverviewViewModel.Factory)
 ){
     var currentPokemonIndex: Int by remember {mutableStateOf(0)}
 
@@ -62,7 +64,9 @@ fun PokedexApp(
                 startDestination = PokedexScreen.OVERVIEW.name
             ){
                 composable(route = PokedexScreen.OVERVIEW.name){
-                    PokemonOverview(onClickPokemon = {index ->
+                    PokemonOverview(
+                        pokemonOverviewViewModel.favoritePokemonSize,
+                        onClickPokemon = {index ->
                         currentPokemonIndex = index
                         pokemonDetailViewModel.updatePokemon(currentPokemonIndex)
                         navController.navigate(PokedexScreen.DETAIL.name)
@@ -71,10 +75,14 @@ fun PokedexApp(
                 composable(route = PokedexScreen.DETAIL.name){
                     PokemonDetailScreen(
                         pokemonDetailViewModel.pokemonDetailUiState,
+                        isFavorite = pokemonDetailViewModel.isFavorite,
                         navigateUp = {
+                            pokemonOverviewViewModel.updateFavoritePokemonCount()
                             pokemonDetailViewModel.resetPokemon()
                             navController.navigateUp()
-                        }
+                        },
+                        deleteFavorite = {pokemonDetailViewModel.deleteCurrentPokemonFromFavorite()},
+                        addFavorite = {pokemonDetailViewModel.addCurrentPokemonToFavorite()}
                     )
                 }
             }

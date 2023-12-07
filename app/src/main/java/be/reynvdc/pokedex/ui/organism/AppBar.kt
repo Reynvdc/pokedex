@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -37,8 +39,8 @@ fun AppBar(
     canNavigateBack: Boolean,
     navigateUp: () -> Unit = {},
     color: Color = Color.Transparent,
-    actionIcons: @Composable RowScope.() -> Unit?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    actionIcons: @Composable RowScope.() -> Unit?
 ){
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -47,7 +49,9 @@ fun AppBar(
             .fillMaxWidth()
             .background(color = color)){
         Row (
-            modifier = Modifier.weight(.3f).padding(start = 8.dp),
+            modifier = Modifier
+                .weight(.3f)
+                .padding(start = 8.dp),
             horizontalArrangement = Arrangement.Start
             ){
             if (canNavigateBack) {
@@ -81,20 +85,37 @@ fun AppBar(
         }
         Row(
             horizontalArrangement = Arrangement.End,
-            modifier = Modifier.weight(0.3f)
+            modifier = Modifier
+                .weight(0.3f)
+                .padding(end = 8.dp)
         ) {
             actionIcons()
         }
     }
 }
 
+@Composable
+fun FavoriteIcon(isFavorite: Boolean = false, onClickFavorite: () -> Unit = {}) {
+    val icon = if(isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+    IconButton(
+        onClick = onClickFavorite
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = stringResource(R.string.favorite_button),
+            tint = Color.White
+        )
+    }
+}
 
 @Preview
 @Composable
 fun AppBarPreview(modifier: Modifier = Modifier){
     PokedexTheme {
         Surface(color = Color.Blue) {
-                AppBar(title = "Title", canNavigateBack = true, actionIcons = {})
+                AppBar(title = "Title", canNavigateBack = true){
+                    FavoriteIcon()
+                }
         }
     }
 }

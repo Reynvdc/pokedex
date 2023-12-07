@@ -25,13 +25,11 @@ import be.reynvdc.pokedex.ui.components.carditem.CardItem
 import be.reynvdc.pokedex.ui.components.carditem.CardItemUiData
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonList
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListViewModel
-import be.reynvdc.pokedex.ui.screen.PokemonOverviewViewModel
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun PokemonOverview(onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modifier){
+fun PokemonOverview(favoritePokemonTotal: Int = 0, onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modifier){
     val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
-    val pokemonOverviewViewModel: PokemonOverviewViewModel = viewModel(factory = PokemonOverviewViewModel.Factory)
     var searchedWord by remember {
         mutableStateOf("")
     }
@@ -56,7 +54,7 @@ fun PokemonOverview(onClickPokemon: (Int) -> Unit = {},modifier: Modifier = Modi
             Column(modifier = modifier.weight(1f)) {
                 CardItem(cardItemUiData = CardItemUiData(
                     "Favorieten",
-                    "${pokemonOverviewViewModel.favoritePokemonSize} pokemons",
+                    "${favoritePokemonTotal} pokemons",
                     R.drawable.pokeball_white,
                     {},
                     //gradient colors: #5ACCA1 to #27CFCE

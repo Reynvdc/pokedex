@@ -24,6 +24,7 @@ import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.mock.pokemonAboutCardUiData
 import be.reynvdc.pokedex.mock.pokemonStatsCardUiData
 import be.reynvdc.pokedex.ui.organism.AppBar
+import be.reynvdc.pokedex.ui.organism.FavoriteIcon
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonAboutCard
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonStatPreview
 import be.reynvdc.pokedex.ui.organism.pokemon.PokemonStatsCard
@@ -34,7 +35,13 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 
 @Composable
-fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState, navigateUp: ()-> Unit){
+fun PokemonDetailScreen(
+    pokemonDetailUiState: PokemonDetailUiState,
+    isFavorite: Boolean = false,
+    navigateUp: ()-> Unit,
+    deleteFavorite: () -> Unit,
+    addFavorite: () -> Unit,
+){
     when(pokemonDetailUiState){
         is PokemonDetailUiState.Loading -> LoadingScreen()
         is PokemonDetailUiState.Success ->
@@ -59,9 +66,13 @@ fun PokemonDetailScreen(pokemonDetailUiState: PokemonDetailUiState, navigateUp: 
                     title = pokemonDetailUiState.name,
                     canNavigateBack = true,
                     color = pokemonDetailUiState.backgroundColor.copy(alpha = 0.4f),
-                    navigateUp = navigateUp,
-                    actionIcons = {}
-                )
+                    navigateUp = navigateUp
+                ){
+                    FavoriteIcon(isFavorite, onClickFavorite = {
+                        if (isFavorite) deleteFavorite()
+                        else addFavorite()
+                    })
+                }
             }
         is PokemonDetailUiState.Error -> ErrorScreen()
     }
@@ -78,6 +89,8 @@ fun PokemonDetailScreenPreview(){
             pokemonStatsCardUiData = pokemonStatsCardUiData,
             pokemonAboutCardUiData = pokemonAboutCardUiData
         ),
-        navigateUp = {}
+        navigateUp = {},
+        deleteFavorite = {},
+        addFavorite = {}
     )
 }

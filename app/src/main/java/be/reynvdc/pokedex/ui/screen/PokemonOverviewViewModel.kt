@@ -2,7 +2,6 @@ package be.reynvdc.pokedex.ui.screen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -13,11 +12,14 @@ import be.reynvdc.pokedex.PokedexApplication
 import be.reynvdc.pokedex.core.service.FavoritePokemonService
 import kotlinx.coroutines.launch
 
-class PokemonOverviewViewModel(favoritePokemonService: FavoritePokemonService) : ViewModel() {
-
+class PokemonOverviewViewModel(val favoritePokemonService: FavoritePokemonService) : ViewModel() {
     var favoritePokemonSize by mutableStateOf(0)
 
     init {
+        updateFavoritePokemonCount()
+    }
+
+    fun updateFavoritePokemonCount() {
         viewModelScope.launch {
             favoritePokemonSize = favoritePokemonService.getTotal()
         }

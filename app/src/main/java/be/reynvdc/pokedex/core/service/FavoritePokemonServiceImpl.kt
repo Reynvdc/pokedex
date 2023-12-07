@@ -11,6 +11,10 @@ class FavoritePokemonServiceImpl : FavoritePokemonService {
         return PokemonServiceMapper.toPokemonList(pokemonList)
     }
 
+    override suspend fun isFavorite(pokemon: Pokemon): Boolean {
+       return PokemonDatabase.INSTANCE?.favoritePokemonDao()?.exists(pokemon.id) ?: false
+    }
+
     override suspend fun getTotal(): Int {
         return PokemonDatabase.INSTANCE?.favoritePokemonDao()?.count() ?: 0
     }

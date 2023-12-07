@@ -15,6 +15,8 @@ interface FavoritePokemonDao {
     suspend fun insert(favoritePokemon: FavoritePokemon)
     @Query("SELECT COUNT(pokemonId) FROM favorite_pokemon")
     suspend fun count(): Int
+    @Query("SELECT EXISTS(SELECT 1 FROM favorite_pokemon WHERE pokemonId= :pokemonId)")
+    suspend fun exists(pokemonId: Int): Boolean
     @Query("SELECT pokemon.* FROM pokemon INNER JOIN favorite_pokemon ON pokemon.id = favorite_pokemon.pokemonId")
     suspend fun getAllFavoritePokemon(): List<Pokemon>
 }

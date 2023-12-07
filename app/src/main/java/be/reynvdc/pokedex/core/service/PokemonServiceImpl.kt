@@ -1,6 +1,5 @@
 package be.reynvdc.pokedex.core.service
 
-import android.util.Log
 import be.reynvdc.pokedex.core.client.appwise.AppwisePokemonClient
 import be.reynvdc.pokedex.core.client.pokeapi.PokeApiClient
 import be.reynvdc.pokedex.core.client.pokeapi.model.PokeApiPokemon
@@ -16,7 +15,6 @@ class PokemonServiceImpl : PokemonService{
 
     private val appwisePokemonClient = AppwisePokemonClient.create()
     private val pokeApiPokemonClient = PokeApiClient.create()
-    private val favoritePokemonService = FavoritePokemonServiceImpl()
 
     override suspend fun getList() : List<Pokemon>{
         val pokemonDatabaseList = PokemonDatabase.INSTANCE?.pokemonDao()?.loadAll() ?: listOf()
@@ -36,7 +34,6 @@ class PokemonServiceImpl : PokemonService{
         val pokemonDatabase = PokemonDatabase.INSTANCE?.pokemonDao()?.findById(id)
         return if (pokemonDatabase != null && pokemonDatabase.hasDetails()) {
             val pokemon = PokemonServiceMapper.toPokemon(pokemonDatabase)
-            testFavorite(pokemon)
             pokemon
         }
         else {
@@ -44,18 +41,8 @@ class PokemonServiceImpl : PokemonService{
             PokemonDatabase.INSTANCE?.pokemonDao()?.insert(
                 PokemonDatabaseMapper.toPokemon(pokemon)
             )
-            testFavorite(pokemon)
             pokemon
         }
-    }
-
-    private suspend fun testFavorite(pokemon:Pokemon){
-        favoritePokemonService.add(pokemon)
-        Log.d("favorite", "added pokemon")
-        val favPokemon = favoritePokemonService.getFavoritePokemonList()
-        val size = favoritePokemonService.getTotal()
-        Log.d("favorite", "fav pokemonlist: $favPokemon")
-        Log.d("favorite", "fav size: $size")
     }
 
     override suspend fun getPokemonByString(value: String): Pokemon {
