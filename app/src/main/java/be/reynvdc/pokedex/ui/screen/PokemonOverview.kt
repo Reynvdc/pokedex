@@ -25,10 +25,18 @@ import be.reynvdc.pokedex.ui.components.carditem.CardItem
 import be.reynvdc.pokedex.ui.components.carditem.CardItemUiData
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonList
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListViewModel
+import be.reynvdc.pokedex.ui.theme.FavoritePokemonBrush
+import be.reynvdc.pokedex.ui.theme.MyTeamColor
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
 @Composable
-fun PokemonOverview(favoritePokemonTotal: Int = 0, onClickPokemon: (Int) -> Unit = {}, onClickFavorite: () -> Unit= {},modifier: Modifier = Modifier){
+fun PokemonOverview(
+    favoritePokemonTotal: Int = 0,
+    onClickPokemon: (Int) -> Unit = {},
+    onClickFavorite: () -> Unit= {},
+    onClickTeam: () -> Unit = {},
+    modifier: Modifier = Modifier
+){
     val pokemonListViewModel: PokemonListViewModel = viewModel(factory = PokemonListViewModel.Factory)
     var searchedWord by remember {
         mutableStateOf("")
@@ -49,17 +57,25 @@ fun PokemonOverview(favoritePokemonTotal: Int = 0, onClickPokemon: (Int) -> Unit
             horizontalArrangement = Arrangement.spacedBy(10.dp)
         ) {
             Column(modifier = modifier.weight(1f)) {
-                CardItem(cardItemUiDataSample1)
+                CardItem(
+                    CardItemUiData(
+                        stringResource(id = R.string.team_title),
+                        "4 pokemons",
+                        R.drawable.pokeball_white,
+                        onClick = onClickTeam,
+                        color = MyTeamColor
+                    )
+                )
             }
             Column(modifier = modifier.weight(1f)) {
-                CardItem(cardItemUiData = CardItemUiData(
-                    "Favorieten",
-                    "${favoritePokemonTotal} pokemons",
-                    R.drawable.pokeball_white,
-                    onClick = onClickFavorite,
-                    //gradient colors: #5ACCA1 to #27CFCE
-                    brush = Brush.horizontalGradient(listOf(Color(0x5ACCA1).copy(alpha = 0.8f), Color(0x27CFCE).copy(alpha = 0.6f)))
-                )
+                CardItem(
+                    cardItemUiData = CardItemUiData(
+                        stringResource(id = R.string.favorite_title),
+                        "${favoritePokemonTotal} pokemons",
+                        R.drawable.pokeball_white,
+                        onClick = onClickFavorite,
+                        brush = FavoritePokemonBrush
+                    )
                 )
             }
         }
