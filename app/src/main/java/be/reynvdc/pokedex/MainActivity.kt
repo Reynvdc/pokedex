@@ -26,12 +26,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import be.reynvdc.pokedex.mock.cardListUiDataSampleList1
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListUiState
+import be.reynvdc.pokedex.ui.screen.FavoritePokemonListScreen
 import be.reynvdc.pokedex.ui.screen.FavoritePokemonViewModel
 import be.reynvdc.pokedex.ui.screen.PokemonDetailScreen
 import be.reynvdc.pokedex.ui.screen.PokemonDetailViewModel
 import be.reynvdc.pokedex.ui.screen.PokemonListScreen
 import be.reynvdc.pokedex.ui.screen.PokemonOverviewViewModel
-import be.reynvdc.pokedex.ui.theme.FavoritePokemonBrush
 import be.reynvdc.pokedex.ui.theme.MyTeamColor
 import be.reynvdc.pokedex.ui.theme.PokedexTheme
 
@@ -51,9 +51,7 @@ class MainActivity : ComponentActivity() {
 fun PokedexApp(
     navController: NavHostController = rememberNavController(),
     pokemonDetailViewModel: PokemonDetailViewModel = viewModel(factory = PokemonDetailViewModel.Factory),
-    pokemonOverviewViewModel: PokemonOverviewViewModel = viewModel(factory = PokemonOverviewViewModel.Factory),
-    favoritePokemonViewModel: FavoritePokemonViewModel = viewModel(factory = FavoritePokemonViewModel.Factory)
-
+    pokemonOverviewViewModel: PokemonOverviewViewModel = viewModel(factory = PokemonOverviewViewModel.Factory)
 ){
     var currentPokemonIndex: Int by remember {mutableStateOf(0)}
 
@@ -99,18 +97,17 @@ fun PokedexApp(
                         },
                         deleteFavorite = {
                             pokemonDetailViewModel.deleteCurrentPokemonFromFavorite()
-                            favoritePokemonViewModel.getPokemon()
                         },
                         addFavorite = {
                             pokemonDetailViewModel.addCurrentPokemonToFavorite()
-                            favoritePokemonViewModel.getPokemon()
                         }
                     )
                 }
                 composable(route = PokedexScreen.FAVORITE.name){
-                    PokemonListScreen(
-                        title= stringResource(id = R.string.favorite_title),
-                        pokemonListUiState = favoritePokemonViewModel.favoritePokemonUiState,
+                    val favoritePokemonViewModel: FavoritePokemonViewModel = viewModel(factory = FavoritePokemonViewModel.Factory)
+                    favoritePokemonViewModel.update()
+                    FavoritePokemonListScreen(
+                        favoritePokemonViewModel = favoritePokemonViewModel,
                         onClickPokemon = {index ->
                             currentPokemonIndex = index
                             pokemonDetailViewModel.updatePokemon(currentPokemonIndex)
@@ -119,7 +116,6 @@ fun PokedexApp(
                         navigateUp = {
                             navController.navigateUp()
                         },
-                        modifier = Modifier.background(brush = FavoritePokemonBrush)
                     )
                 }
                 composable(route = PokedexScreen.TEAM.name){

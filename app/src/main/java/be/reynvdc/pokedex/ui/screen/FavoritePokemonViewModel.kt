@@ -1,8 +1,5 @@
 package be.reynvdc.pokedex.ui.screen
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -12,22 +9,25 @@ import be.reynvdc.pokedex.PokedexApplication
 import be.reynvdc.pokedex.core.service.FavoritePokemonService
 import be.reynvdc.pokedex.ui.organism.mapper.PokemonMapper
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonListUiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FavoritePokemonViewModel(private val favoritePokemonService: FavoritePokemonService) : ViewModel() {
 
-    var favoritePokemonUiState: PokemonListUiState by mutableStateOf(PokemonListUiState.Loading)
-        private set
-
-    init {
+    private var _favoritePokemonUiState = MutableStateFlow<PokemonListUiState>(PokemonListUiState.Loading)
+    val favoritePokemonUiState = _favoritePokemonUiState.asStateFlow()
+    fun update(){
         getPokemon()
     }
 
-    fun getPokemon() {
+    private fun getPokemon() {
+        _favoritePokemonUiState.update { PokemonListUiState.Loading}
         viewModelScope.launch {
             val pokemonList = favoritePokemonService.getFavoritePokemonList()
             val cardListUiDataList = PokemonMapper.toCardListItemUiDataList(pokemonList)
-            favoritePokemonUiState = PokemonListUiState.Success(cardListUiDataList)
+            _favoritePokemonUiState.update { PokemonListUiState.Success(cardListUiDataList)}
         }
     }
 

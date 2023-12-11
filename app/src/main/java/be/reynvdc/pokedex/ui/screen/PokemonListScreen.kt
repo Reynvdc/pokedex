@@ -8,16 +8,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import be.reynvdc.pokedex.R
 import be.reynvdc.pokedex.mock.cardListUiDataSampleList1
 import be.reynvdc.pokedex.ui.organism.AppBar
 import be.reynvdc.pokedex.ui.organism.pokemon.list.PokemonList
@@ -33,7 +33,6 @@ fun PokemonListScreen(
     navigateUp: () -> Unit = {},
     modifier:Modifier = Modifier
 ){
-    val _state : PokemonListUiState by remember{ mutableStateOf(pokemonListUiState)}
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -47,10 +46,26 @@ fun PokemonListScreen(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp)
             ) {
                 Text(text = title, fontSize = 32.sp, fontWeight = FontWeight.Bold, color = Color.White)
-                PokemonList(_state, onClickPokemon = onClickPokemon)
+                PokemonList(pokemonListUiState, onClickPokemon = onClickPokemon)
             }
         }
     }
+}
+
+@Composable
+fun FavoritePokemonListScreen(
+    favoritePokemonViewModel: FavoritePokemonViewModel = viewModel(factory = FavoritePokemonViewModel.Factory),
+    onClickPokemon: (Int) -> Unit = {},
+    navigateUp: () -> Unit = {}
+){
+    val favPokemonListUiState = favoritePokemonViewModel.favoritePokemonUiState.collectAsState()
+    PokemonListScreen(
+        title= stringResource(id = R.string.favorite_title),
+        pokemonListUiState = favPokemonListUiState.value,
+        onClickPokemon = onClickPokemon,
+        navigateUp = navigateUp,
+        modifier = Modifier.background(brush = FavoritePokemonBrush)
+    )
 }
 
 @Preview
